@@ -153,6 +153,25 @@ byte Stransfer(byte b)
 
 // SerialLCD calls *******************************************************************************************
 // wbp: goto with row & column
+#define LCD_SETCGRAMADDR	0x40
+
+void lcdCommand(uint8_t value)
+{
+  LCD.write(0xFE);
+  LCD.write(value);
+  delay(5);
+}
+
+void lcdCreateChar(int location, uint8_t charmap[])
+{
+  location -= 1;
+  location &= 0x07;
+  for (int i=0; i<8; i++){
+    lcdCommand(LCD_SETCGRAMADDR | (location << 3) | i);
+    LCD.write(charmap[i]);
+  }
+}
+
 void lcdPosition(int row, int col) {
   LCD.write(0xFE);   //command flag
   LCD.write((col + row*64 + 128));    //position 
@@ -372,14 +391,12 @@ void setup()
   readBatteryVoltage();
   
    // assignes each segment a write number
-  LCD.createChar(1,Bat_00Char);
-  LCD.createChar(2,Bat_20Char);
-  LCD.createChar(3,Bat_40Char);
-  LCD.createChar(4,Bat_60Char);
-  LCD.createChar(5,Bat_80Char);
-  LCD.createChar(6,Bat_100Char); 
-  
-  
+  lcdCreateChar(1,Bat_00Char);
+  lcdCreateChar(2,Bat_20Char);
+  lcdCreateChar(3,Bat_40Char);
+  lcdCreateChar(4,Bat_60Char);
+  lcdCreateChar(5,Bat_80Char);
+  lcdCreateChar(6,Bat_100Char);   
 }
 
 
