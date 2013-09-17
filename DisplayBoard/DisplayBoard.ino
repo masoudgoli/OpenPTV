@@ -1009,12 +1009,15 @@ void playToneReject1 () {
    }  
 /////////////////////////////////////////////////////////////////////////////////////////////
 
+
 void display_voltage() {
   unsigned long int potvalue2 = analogRead (potpin);  
   // potvalue ranges from 0 to 1023, representing a voltage range from 0 to 29
   // Transform it into a fixed point number denoting hundredths of a volt.  i.e 100 = 1v
   voltage_D = (potvalue2 * 29) / 10.23;  
-
+/*
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// this section creates a bar graph resembling the remaining battery capacity based on voltage 
   V1 = (voltage_D/28);    // ought to be 29 ??
       int vom1 = (V1 / 12);  //divide reading for solid blocks // 6 = 16 blocks, 12 = 8 blocks
       int rem1 =  (V1 % 12 ); //get modulo for remainder
@@ -1035,6 +1038,17 @@ void display_voltage() {
           LCD.print("Km");
 //        clearLCD();
         lcdPosition (0,0);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+*/        
+   lcdPosition (1,0);
+    LCD.print((char)0);   // 0%
+    LCD.print((char)1);   // 20%
+    LCD.print((char)2);   // 40%
+    LCD.print((char)3);   // 60%
+    LCD.print((char)4);   // 80%
+    LCD.print((char)5);   // 100%
+// todo: make if or case statements to display only one symbol on the LCD corresponding to the voltage 
+        
 //  ledvalue = map (potvalue, 0, 1023, 0, 255);    // later no LED
 //  analogWrite (ledpin, ledvalue);
   if (voltage_D < 2500) {    //equivalent to 25.00V
