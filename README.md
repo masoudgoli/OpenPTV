@@ -1,7 +1,7 @@
 OpenPTV
 =======
 
-The sketches are based on the work of OpenPTV.org for a Segway clone.
+The sketches are based on the work of OpenPTV.org Segway clone.
 
 The self balancer described here has a few significant changes to the OpenPTV: 
 1. a throttle grip allows to control the speed just like a motor cycle
